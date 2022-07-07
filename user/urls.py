@@ -12,7 +12,7 @@ urlpatterns=[
     path('<int:pk>/change_pw/', views.change_pw, name='change_pw'),
     path('<int:pk>/delete/', views.delete, name='delete'),
     path('logout/', views.logout, name='logout'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # static 파일 경로 설정
 if settings.DEBUG: # 👈 DEBUG=True일 때만,

@@ -77,7 +77,24 @@ def profile(request, pk):
 
 @require_http_methods(['GET', 'POST'])
 def fileUpload(request, pk):
-    if request.method=='POST':
+    if request.method == 'POST':
+        try:
+            img = request.FILES["image"]
+            instance = Profile_image(
+                image=img,
+                user=request.user,
+                title=img.name,
+            )
+            instance.save()
+            messages.success(request, '프로필 업데이트 성공')
+        except:
+            messages.error(request, '프로필 업데이트 실패')
+            return HttpResponseRedirect(reverse('user:profile', args=[pk]))
+    else:
+        return HttpResponseRedirect(reverse('user:fileUpload', args=[pk]))
+    return HttpResponseRedirect(reverse('user:profile', args=[pk]))
+
+'''    if request.method=='POST':
         fileform = FileUploadForm(request.POST, request.FILES)
         if fileform.is_valid():
             instance = Profile_image(image=request.FILES['file'])
@@ -88,7 +105,7 @@ def fileUpload(request, pk):
             messages.error(request, '프로필 업데이트 실패')
     else:
         fileform = FileUploadForm()
-    return HttpResponseRedirect(reverse('user:profile', args=[pk]))
+    return HttpResponseRedirect(reverse('user:profile', args=[pk]))'''
 
 @require_http_methods(['GET', 'POST'])
 @login_required

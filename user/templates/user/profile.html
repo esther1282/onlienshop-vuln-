@@ -35,7 +35,7 @@ Profile
                 <form method="POST" action="{% url 'user:fileUpload' user.pk %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="align-items-center d-flex justify-content-center">{{ fileform.image }}</div>
-                    <button type="submit" class="btn-primary">업로드</button>
+                    <input type="submit" class="btn-primary" value="업데이트"></input>
                 </form>
                 <h3 class="user-name">{{ form.username.value }}님</h3>
 				<h3 class="user-email">{{ user.email }}</h3>

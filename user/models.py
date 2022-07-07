@@ -65,8 +65,8 @@ class User(AbstractUser):
 class Profile_image(models.Model):
     user = models.ForeignKey('user.User', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
-    image = models.ImageField(default='user.png', upload_to='user/')
+    image = models.ImageField(null=True, default='user.png', upload_to='user/')
 
     def __str__(self):
-        return self.title
+        return self.image.name
 
