@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.contrib import messages
 from .forms import SignUpForm, CustomUserChangeForm, CheckPasswordForm, CustomPasswordChangeForm
+from .models import User
 
 @require_http_methods(['GET', 'POST'])
 def login(request):
@@ -55,31 +56,19 @@ def logout(request):
     messages.success(request, '로그아웃 완료')
     return HttpResponseRedirect('/')
 
-@login_required
 def profile(request, pk):
-
+    user = User.objects.get(id=pk)
     if request.method == 'POST':
-        form = CustomUserChangeForm(request.POST, instance=request.user)
+        form = CustomUserChangeForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
             messages.success(request, '업데이트 성공')
-            return HttpResponseRedirect(reverse('user:profile', args=[request.user.pk]))
+            return HttpResponseRedirect(reverse('user:profile', args=[pk]))
     else:
-        form = CustomUserChangeForm(instance=request.user)
+        form = CustomUserChangeForm(instance=user)
 
     return render(request, 'user/profile.html', {'form':form})
 
-@login_required
-def update(request, pk):
-    context=''
-    if request.method == 'GET':
-        form = CustomUserChangeForm(instance=request.user)
-    elif request.method == 'POST':
-        form = CustomUserChangeForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return render(request, 'user/profile.html', {'form':form})
-    return render(request, 'user/update.html', {'form': form, 'context': context})
 
 @require_http_methods(['GET', 'POST'])
 @login_required
