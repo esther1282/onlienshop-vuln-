@@ -59,7 +59,7 @@ def logout(request):
 def profile(request, pk):
     user = User.objects.get(id=pk)
     try:
-        image = Profile_image.objects.get(user=user)
+        image = Profile_image.objects.filter(user=user).order_by('id').reverse()[0]
     except:
         image = ''
     fileform = FileUploadForm()
