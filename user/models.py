@@ -45,6 +45,7 @@ class User(AbstractUser):
     address = models.CharField(blank=True, max_length=255, verbose_name="주소")
     gender = models.CharField(blank=True, choices=GENDER_CHOICES, max_length=255)
 
+
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -59,4 +60,13 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+
+
+class Profile_image(models.Model):
+    user = models.ForeignKey('user.User', on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    image = models.ImageField(default='user.png', upload_to='user/')
+
+    def __str__(self):
+        return self.title
 

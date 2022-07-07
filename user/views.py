@@ -6,8 +6,8 @@ from django.contrib.auth import models, authenticate, get_user_model, login as a
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.contrib import messages
-from .forms import SignUpForm, CustomUserChangeForm, CheckPasswordForm, CustomPasswordChangeForm
-from .models import User
+from .forms import SignUpForm, CustomUserChangeForm, CheckPasswordForm, CustomPasswordChangeForm, FileUploadForm
+from .models import User, Profile_image
 
 @require_http_methods(['GET', 'POST'])
 def login(request):
@@ -58,6 +58,12 @@ def logout(request):
 
 def profile(request, pk):
     user = User.objects.get(id=pk)
+    try:
+        image = Profile_image.objects.get(user=user)
+    except:
+        image = ''
+    fileform = FileUploadForm()
+
     if request.method == 'POST':
         form = CustomUserChangeForm(request.POST, instance=user)
         if form.is_valid():
@@ -67,8 +73,22 @@ def profile(request, pk):
     else:
         form = CustomUserChangeForm(instance=user)
 
-    return render(request, 'user/profile.html', {'form':form})
+    return render(request, 'user/profile.html', {'form':form, 'fileform':fileform,'image':image})
 
+@require_http_methods(['GET', 'POST'])
+def fileUpload(request, pk):
+    if request.method=='POST':
+        fileform = FileUploadForm(request.POST, request.FILES)
+        if fileform.is_valid():
+            instance = Profile_image(image=request.FILES['file'])
+            instance.save()
+            messages.success(request, '프로필 업데이트 성공')
+            return HttpResponseRedirect(reverse('user:profile', args=[pk]))
+        else:
+            messages.error(request, '프로필 업데이트 실패')
+    else:
+        fileform = FileUploadForm()
+    return HttpResponseRedirect(reverse('user:profile', args=[pk]))
 
 @require_http_methods(['GET', 'POST'])
 @login_required
