@@ -1,5 +1,6 @@
 {% extends "user/base.html" %}
 {% load static %}
+{% load humanize %}
 {% block title %}
 Profile
 {% endblock title %}
@@ -24,10 +25,19 @@ Profile
 	<div class="card-body">
 		<div class="account-settings">
 			<div class="user-profile">
-                <div class="user-avatar">
-					<img src="{% static "/images/user.png" %}" alt="User Image">
+                <div class="user-avatar" style="margin-bottom: 0">
+                    {%  if image %}
+					    <img src="{{ image.image.url }}" alt="User Image">
+                    {% else %}
+                        <img src="{% static "/images/user.png" %}" alt="Default Image">
+                    {% endif %}
 				</div>
-				<h3 class="user-name">{{ form.username.value }}님</h3>
+                <form method="POST" action="{% url 'user:fileUpload' user.pk %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="align-items-center d-flex justify-content-center">{{ fileform.image }}</div>
+                    <input type="submit" class="btn-primary" value="업데이트"></input>
+                </form>
+                <h3 class="user-name">{{ form.username.value }}님</h3>
 				<h3 class="user-email">{{ user.email }}</h3>
 			</div>
 		</div>

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth.hashers import check_password
-from .models import User
+from .models import User, Profile_image
 
 class SignUpForm(UserCreationForm):
 
@@ -51,3 +51,8 @@ class CustomPasswordChangeForm(PasswordChangeForm):
         self.fields['new_password2'].widget.attrs.update({
             'class': 'form-control',
         })
+
+class FileUploadForm(forms.ModelForm):
+    class Meta:
+        model = Profile_image
+        fields = ['image']

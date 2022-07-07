@@ -2,6 +2,7 @@ from .models import Product, ProductImage, Category
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from django.utils.html import escape
+from django.db import connection
 
 def index(request):
     all_products = Product.objects.all()
@@ -12,9 +13,23 @@ def index(request):
 
     query = request.GET.get("q")
     if query:
+        cursor = connection.cursor()
+
+        strSql = "SELECT * FROM shop_product where name LIKE '%"+query+"%'"
+        result = cursor.execute(strSql)
+        datas = cursor.fetchall()
+
+        connection.commit()
+        connection.close()
+
+        products=[]
+        for data in datas:
+            print(data)
+
         search_products = all_products.filter(
             Q(name__icontains=query) | Q(content__icontains=query)
         ).distinct()
+        print(search_products)
         if search_products.count()==0:
             return render(request, 'shop/index.html', {'all_products': search_products, 'user': user, 'query': query})
         return render(request, 'shop/index.html', {'all_products': search_products, 'user':user, 'query':query })
