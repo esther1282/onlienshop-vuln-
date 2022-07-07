@@ -40,8 +40,8 @@ Shop
                 {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
             {% endfor %}
             {% else %}
-                {% if query %}
-                 <h3> '{{ query }}'에 대한 상품은 존재하지 않습니다. </h3>
+                {% if query %} <!--#XSS포인트-->
+                 <div name="notfound" value={{query}}> '{{ query }}'에 대한 상품은 존재하지 않습니다. </div>
                 {% else %}
                 <h3>등록된 상품이 없습니다.</h3>
                 {% endif %}
