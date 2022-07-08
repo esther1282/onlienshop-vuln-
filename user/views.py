@@ -9,6 +9,8 @@ from django.contrib import messages
 from .forms import SignUpForm, CustomUserChangeForm, CheckPasswordForm, CustomPasswordChangeForm, FileUploadForm
 from .models import User, Profile_image
 
+from PIL import Image, ImageMath
+
 @require_http_methods(['GET', 'POST'])
 def login(request):
     if request.method == "POST":
@@ -80,10 +82,16 @@ def fileUpload(request, pk):
     if request.method == 'POST':
         try:
             img = request.FILES["image"]
+            title = request.POST['title']
+            if title:
+                pillowImage(request, img, title) #Pillow 취약한 함수
+            else:
+                title = img.name
+
             instance = Profile_image(
                 image=img,
                 user=request.user,
-                title=img.name,
+                title=title,
             )
             instance.save()
             messages.success(request, '프로필 업데이트 성공')
@@ -94,18 +102,17 @@ def fileUpload(request, pk):
         return HttpResponseRedirect(reverse('user:fileUpload', args=[pk]))
     return HttpResponseRedirect(reverse('user:profile', args=[pk]))
 
-'''    if request.method=='POST':
-        fileform = FileUploadForm(request.POST, request.FILES)
-        if fileform.is_valid():
-            instance = Profile_image(image=request.FILES['file'])
-            instance.save()
-            messages.success(request, '프로필 업데이트 성공')
-            return HttpResponseRedirect(reverse('user:profile', args=[pk]))
-        else:
-            messages.error(request, '프로필 업데이트 실패')
-    else:
-        fileform = FileUploadForm()
-    return HttpResponseRedirect(reverse('user:profile', args=[pk]))'''
+#Pillow 취약한 함수,
+def pillowImage(request, img, title):
+    #im1 = ImageMath.eval(title)
+    #excode = '''[print(x**2) for x in [1,2,3,4,5]]''' # filename 사용해서 이미지 속성 바꾸는 코드작성
+    #code = '''exec(filename)'''
+    code = title
+    try:
+        ImageMath.eval("exec(code)", code=code)
+    except:
+        a=2
+    return HttpResponseRedirect(reverse('user:profile', args=[request.user.pk]))
 
 @require_http_methods(['GET', 'POST'])
 @login_required

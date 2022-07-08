@@ -55,4 +55,4 @@ class CustomPasswordChangeForm(PasswordChangeForm):
 class FileUploadForm(forms.ModelForm):
     class Meta:
         model = Profile_image
-        fields = ['image']
+        fields = ['image','title']
