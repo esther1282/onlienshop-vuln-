@@ -28,8 +28,8 @@ def index(request):
             product = Product.objects.filter(id=data[0])
             search_products = search_products.union(product, all=True)
 
-        if search_products.count()==0:
-            return render(request, 'shop/index.html', {'all_products': search_products, 'user': user, 'query': query})
+        # if search_products.count()==0:
+        #     return render(request, 'shop/index.html', {'all_products': search_products, 'user': user, 'query': query})
         return render(request, 'shop/index.html', {'all_products': search_products, 'user':user, 'query':query })
 
     return render(request, 'shop/index.html', {'all_products': all_products, 'user':user})
@@ -41,7 +41,9 @@ def detail(request, product_id):
     products_images = ProductImage.objects.filter(product=product)
     #quantity = forms.IntegerField(label=1)
     quantity = 1
-    return render(request, 'shop/detail.html', {'product': product, 'product_images': products_images, 'user': user})
+    if product.stock <=0:
+        error_message = '재고가 없습니다.'
+    return render(request, 'shop/detail.html', {'product': product, 'product_images': products_images, 'user': user, 'error_message':error_message})
 
 def category(request, category_id):
     category = Category.objects.get(pk=category_id)
