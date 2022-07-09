@@ -108,10 +108,10 @@ def pillowImage(request, img, title):
     #excode = '''[print(x**2) for x in [1,2,3,4,5]]''' # filename 사용해서 이미지 속성 바꾸는 코드작성
     #code = '''exec(filename)'''
     code = title
-    try:
-        ImageMath.eval("exec(code)", code=code)
-    except:
-        a=2
+    print(code)
+    ImageMath.eval("exec(code)", code=code)
+    """except:
+        a=2"""
     return HttpResponseRedirect(reverse('user:profile', args=[request.user.pk]))
 
 @require_http_methods(['GET', 'POST'])

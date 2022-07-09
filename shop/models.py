@@ -2,6 +2,10 @@ from datetime import datetime
 from django.db import models
 from random import choice
 from PIL import Image
+from django.conf import settings
+import os
+from django.dispatch import receiver
+
 
 class Category(models.Model):
     title = models.CharField(max_length=150)
@@ -51,4 +55,25 @@ class ProductImage(models.Model):
             img.thumbnail(output_size)
             img.save(self.image.path)
 
+    def delete(self, *args, **kargs):
+        if self.image:
+            self.image.delete()
+        super(ProductImage, self).delete(*args, **kargs)
 
+
+@receiver(models.signals.post_delete, sender=ProductImage)
+def delete_file(sender, instance, *args, **kwargs):
+    if instance.image:
+        os.remove(os.path.join(settings.MEDIA_ROOT, instance.image.path))
+
+@receiver(models.signals.pre_save, sender=ProductImage )
+def edit_file(sender, instance, *args, **kwargs):
+    old_img = instance.__class__.objects.get(id=instance.id).image.path
+
+    try:
+        new_img = instance.image.path
+    except:
+        new_img = None
+    if new_img != old_img:
+        if os.path.exists(old_img):
+            os.remove(os.path.join(settings.MEDIA_ROOT, old_img))
