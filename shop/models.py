@@ -44,7 +44,7 @@ class ProductImage(models.Model):
     image = models.ImageField(upload_to=product_image_path)
 
     def __str__(self):
-        return self.product.name + "'s images"
+        return self.image.name
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -68,12 +68,14 @@ def delete_file(sender, instance, *args, **kwargs):
 
 @receiver(models.signals.pre_save, sender=ProductImage )
 def edit_file(sender, instance, *args, **kwargs):
-    old_img = instance.__class__.objects.get(id=instance.id).image.path
-
     try:
-        new_img = instance.image.path
+        old_img = instance.__class__.objects.get(id=instance.id).image.path
+        try:
+            new_img = instance.image.path
+        except:
+            new_img = None
+        if new_img != old_img:
+            if os.path.exists(old_img):
+                os.remove(os.path.join(settings.MEDIA_ROOT, old_img))
     except:
-        new_img = None
-    if new_img != old_img:
-        if os.path.exists(old_img):
-            os.remove(os.path.join(settings.MEDIA_ROOT, old_img))
+        pass
