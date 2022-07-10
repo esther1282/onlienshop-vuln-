@@ -17,7 +17,7 @@ def index(request):
         shipping = 0
     else :
         shipping = 3000
-    return render(request, 'cart/index.html', {'cart': cart, 'shipping': 3000})
+    return render(request, 'cart/index.html', {'cart': cart, 'shipping': shipping})
 
 
 def addCart(request, product_id):
