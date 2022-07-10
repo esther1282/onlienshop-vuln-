@@ -13,10 +13,14 @@ def index(request):
     except Cart.DoesNotExist:
         cart = Cart.objects.create(user=request.user)
         cart.save()
+
     if cart.get_cart_total > 50000:
         shipping = 0
-    else :
+    elif cart.get_cart_total is 0:
+        shipping = 0
+    else:
         shipping = 3000
+
     return render(request, 'cart/index.html', {'cart': cart, 'shipping': shipping})
 
 
