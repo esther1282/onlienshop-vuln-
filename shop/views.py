@@ -41,9 +41,9 @@ def detail(request, product_id):
     products_images = ProductImage.objects.filter(product=product)
     #quantity = forms.IntegerField(label=1)
     quantity = 1
-    if product.stock <=0:
-        error_message = '재고가 없습니다.'
-    return render(request, 'shop/detail.html', {'product': product, 'product_images': products_images, 'user': user, 'error_message':error_message})
+
+    return render(request, 'shop/detail.html', {'product': product, 'product_images': products_images, 'user': user})
+
 
 def category(request, category_id):
     category = Category.objects.get(pk=category_id)
