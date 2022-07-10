@@ -22,7 +22,7 @@ Detail
                 <div class="thumbnail_images">
                     <ul id="thumbnail">
                         {% for image in product_images %}
-                        <li><img onclick="changeImage(this)" src="{{ image.image.url }}" height="60"></li>
+                        <li><img id='img' onclick="changeImage(this)" src="{{ image.image.url }}" height="60"></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -40,12 +40,17 @@ Detail
                 <p>재고: {{ product.stock }}개</p>
             </div>
             {% if user.is_authenticated %}
-            <button class="btn-cart" onclick='location.href="{% url 'cart:add_cart' product.id %}"'>장바구니</button>
+            <button class="btn-cart" id="bt" onclick='location.href="{% url 'cart:add_cart' product.id %}"'>장바구니</button>
             {% endif %}
         </div>
     </div>
-    {% if error_message %}
-        <h1 style="color:red;"><strong>{{ error_message }}</strong></h1>
+    {% if product.stock <= 0 %}
+        <script type="text/javascript">
+            document.querySelector("#bt").disabled=true;
+            document.querySelector("#bt").style.backgroundColor='grey';
+        </script>
+        <h1 style="color:red; text-align: center"><strong>재고가 없습니다.</strong></h1>
     {% endif %}
 </div>
+
 {% endblock content %}

@@ -22,12 +22,6 @@ def order_cart(request):
     #user 정보 입력
     if request.method == 'GET':
         form = OrderUserChangeForm(instance=user)
-        if request.GET.get('shipping'):
-            shipping = request.GET.get('shipping')
-        else:
-            shipping = 3000
-        cart.shipping = shipping
-        cart.save()
     elif request.method == 'POST':
         form = OrderUserChangeForm(request.POST, instance=user)
         if form.is_valid():
