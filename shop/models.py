@@ -34,6 +34,9 @@ class Product(models.Model):
         except:
             random_image = choice(ProductImage.objects.filter(product=self))
             return random_image.image.url
+    @property
+    def get_product_stock(self):
+        return self.stock
 
 def product_image_path(instance, filename):
     return '{}'.format(filename)
