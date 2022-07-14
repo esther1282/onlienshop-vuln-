@@ -1,5 +1,5 @@
 from .models import Product, ProductImage, Category
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.utils.html import escape
 from django.db import connection
