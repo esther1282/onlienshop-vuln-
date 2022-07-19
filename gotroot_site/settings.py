@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'board.apps.BoardConfig',
     'order.apps.OrderConfig',
     'cart.apps.CartConfig',
     'shop.apps.ShopConfig',
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'bootstrap4',
     'mathfilters',
+    'django_summernote',
 ]
 
 MIDDLEWARE = [
