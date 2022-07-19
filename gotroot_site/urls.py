@@ -9,6 +9,8 @@ urlpatterns = [
     path('user/', include('user.urls')),
     path('order/', include('order.urls')),
     path('cart/', include('cart.urls')),
+    path('board/', include('board.urls')),
+    path('summernote/', include('django_summernote.urls')),
 ]
 
 if settings.DEBUG:

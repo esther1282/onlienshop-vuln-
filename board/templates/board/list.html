@@ -1,0 +1,96 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+<h1>게시판페이지</h1>
+<div class="content">
+    <table class="board">
+        <thead>
+            <tr class="header">
+                <th style="width:10%">No</th>
+                <th style="width:50%">제목</th>
+                <th style="width:15%;">작성자</th>
+                <th style="width:25%">작성일자</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if posts %}
+        {% for post in posts %}
+        <tr>
+            <td>{{ post.id }}</td>
+            <td>
+                <input type="hidden" id="secret_{{post.id}}" data-secret="{{ post.is_secret }}"/>
+                <input type="hidden" id="Url_{{post.id}}" data-url="{% url 'board:detail' post.id %}"/>
+                <a href="#" onclick="check_secret({{ post.id }})" style="text-decoration: none; color: black;">
+                    {% if post.is_secret %}
+                    비밀글
+                    {% else %}
+                    {{ post.title }}
+                    {% endif %}
+                </a>
+            </td>
+            <td>{{ post.writer }}</td>
+            <td>{{ post.date|date:'Y-m-d' }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+         <tr>
+             <td>작성된 게시글이 없습니다.</td>
+         </tr>
+        {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<ul class="pagination">
+    <ul class="pagination justify-content-center" style="margin-top: 2rem;">
+    {% if posts.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page=1">맨 앞으로</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ posts.previous_page_number }}">이전</a>
+        </li>
+    {% endif %}
+
+    {% for page in posts.paginator.page_range %}
+        {% if page >= posts.number|add:-5 and page <= posts.number|add:5 %}
+        {% if page == posts.number %}
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="?&page={{ page }}">{{ page }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link" href="?&page={{ page }}">{{ page }}</a>
+        </li>
+        {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {% if posts.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ posts.next_page_number }}">다음</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ posts.paginator.num_pages }}">맨 뒤로</a>
+        </li>
+    {% endif %}
+    </ul>
+</ul>
+
+<a href="{% url 'board:write' %}"><button>글쓰기</button></a>
+
+<script type="text/javascript">
+    /*$(document).ready(function checkSuperuser(){
+        var False = false;
+        if ({{ user.is_superuser }} == False) {
+            location.href="/";
+        }
+    });*/
+    function check_secret(post_id){
+        if ($("#secret_"+post_id).attr("data-secret") == "False"){
+            location.href = $("#Url_"+post_id).attr("data-url");
+        }
+        else {
+            location.href = "#";
+        }
+    }
+</script>
