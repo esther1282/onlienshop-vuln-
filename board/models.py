@@ -3,13 +3,17 @@ from django.db import models
 class Post(models.Model):
     title = models.CharField(max_length=50)
     content = models.TextField()
-    writer = models.CharField(max_length=10, default="익명") # 쇼핑몰에서는 user랑 연결하면 될듯?
+    writer = models.ForeignKey('user.User', on_delete=models.CASCADE, null=True)
     date = models.DateTimeField(auto_now_add=True)
     hits = models.PositiveIntegerField(default=0)
     is_secret = models.BooleanField(default=False, )
 
     def __str__self(self):
         return self.post_title
+
+    @property
+    def get_writer(self):
+        return self.user.email
 
     def save(self, *args, **kwargs):
         self.title = xss_filter(self.title)

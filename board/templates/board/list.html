@@ -17,6 +17,7 @@
         <tr>
             <td>{{ post.id }}</td>
             <td>
+                <input type="hidden" id="email_{{post.id}}" data-email="{{ post.writer }}"/>
                 <input type="hidden" id="secret_{{post.id}}" data-secret="{{ post.is_secret }}"/>
                 <input type="hidden" id="Url_{{post.id}}" data-url="{% url 'board:detail' post.id %}"/>
                 <a href="#" onclick="check_secret({{ post.id }})" style="text-decoration: none; color: black;">
@@ -27,7 +28,7 @@
                     {% endif %}
                 </a>
             </td>
-            <td>{{ post.writer }}</td>
+            <td>{{ post.writer.username }}</td>
             <td>{{ post.date|date:'Y-m-d' }}</td>
         </tr>
         {% endfor %}
@@ -84,7 +85,11 @@
         }
     });*/
     function check_secret(post_id){
-        if ($("#secret_"+post_id).attr("data-secret") == "False"){
+        var True = true;
+        if ($("#email_"+post_id).attr("data-email") == "{{user.email}}"){
+            location.href = $("#Url_"+post_id).attr("data-url");
+        }
+        else if($("#secret_"+post_id).attr("data-secret") == "False" || {{ user.is_superuser }} == True){
             location.href = $("#Url_"+post_id).attr("data-url");
         }
         else {

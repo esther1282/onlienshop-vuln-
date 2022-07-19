@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post
+from user.models import User
 from .forms import WriteForm
 from django.core.paginator import Paginator
 
@@ -18,9 +19,14 @@ def list(request):
     paginator = Paginator(post_list, 10) # 한페이지당 개수
     post_page = paginator.get_page(page)
 
-    return render(request, 'board/list.html', {'posts': post_page})
+    return render(request, 'board/list.html', {'posts': post_page, 'user': request.user})
 
 def write(request):
+    if request.user.is_authenticated:
+        pass
+    else:
+        return redirect('/user/login')
+
     if request.method == 'GET':
         write_form = WriteForm()
         return render(request, 'board/write.html', {'forms': write_form})
@@ -33,6 +39,7 @@ def write(request):
             post = Post(
                 title = write_form.title,
                 content = write_form.content,
+                writer = request.user,
                 is_secret = write_form.is_secret
             )
             post.save()
