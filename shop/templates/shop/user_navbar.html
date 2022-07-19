@@ -15,7 +15,9 @@
                         <i class="fa-solid fa-xl fa-cart-shopping custom_icon"></i>
                     </a>
                 </li>
-
+                <li class="">
+                    <a class="mypage" href="{% url 'user:flag' user.pk %}"> flag제출 </a>
+                </li>
                 <li class="">
                     <a class="mypage" href="{% url 'user:profile' user.pk %}"> 마이페이지 </a>
                 </li>

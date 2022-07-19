@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth.hashers import check_password
-from .models import User, Profile_image
+from .models import User, Profile_image, Flag
 
 class SignUpForm(UserCreationForm):
 
@@ -56,3 +56,26 @@ class FileUploadForm(forms.ModelForm):
     class Meta:
         model = Profile_image
         fields = ['image','title']
+
+class FlagForm(forms.ModelForm):
+    class Meta:
+        model = Flag
+        fields = ['xss1','xss2','sql1','sql2','traversal']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def check(self):
+
+        if self.fields['xss1'] == 'flag':
+            return 1
+        else:
+            return 0
+
+    def clean(self):
+        cleaned_data = super().clean()
+        data = cleaned_data.get('xss1')
+
+        if data:
+            if not self.check(data):
+                self.add_error('xss1', 'flag가 일치하지 않습니다.')

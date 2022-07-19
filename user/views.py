@@ -6,8 +6,8 @@ from django.contrib.auth import models, authenticate, get_user_model, login as a
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.contrib import messages
-from .forms import SignUpForm, CustomUserChangeForm, CheckPasswordForm, CustomPasswordChangeForm, FileUploadForm
-from .models import User, Profile_image
+from .forms import SignUpForm, CustomUserChangeForm, CheckPasswordForm, CustomPasswordChangeForm, FileUploadForm, FlagForm
+from .models import User, Profile_image, Flag
 
 from PIL import ImageMath
 
@@ -141,5 +141,20 @@ def change_pw(request, pk):
     else:
         password_form = CustomPasswordChangeForm(request.user)
 
-    return render(request, 'user/change_pw.html', {'form':password_form})
+    return render(request, 'user/change_pw.html', {'form': password_form})
 
+@require_http_methods(['GET', 'POST'])
+@login_required
+def flag(request, pk):
+    user = User.objects.get(id=pk)
+    flag_form = FlagForm(instance=user)
+
+    if request.method == 'POST':
+        flag_form = FlagForm(request.user, request.POST)
+
+        if flag_form.check():
+            flag_form.save()
+            return render(request, 'user/flag.html', {'form': flag_form})
+
+
+    return render(request, 'user/flag.html', {'form': flag_form})

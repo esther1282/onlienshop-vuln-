@@ -70,3 +70,20 @@ class Profile_image(models.Model):
     def __str__(self):
         return self.image.name
 
+class Flag(models.Model):
+    user = models.ForeignKey('user.User', on_delete=models.CASCADE)
+    total = models.CharField(blank=True, max_length=255)
+
+    xss1 = models.CharField(blank=True, max_length=255)
+    xss2 = models.CharField(blank=True, max_length=255)
+    sql1 = models.CharField(blank=True, max_length=255)
+    sql2 = models.CharField(blank=True, max_length=255)
+    traversal = models.CharField(blank=True, max_length=255)
+    upload = models.CharField(blank=True, max_length=255)
+
+    def __str__(self):
+        return self.total
+
+    def getTotal(self):
+        return self.total
+
