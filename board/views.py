@@ -47,7 +47,7 @@ def write(request):
         else:
             context = {'forms': write_form}
             if write_form.errors:
-                for value in write_form.erros.values():
+                for value in write_form.errors.values():
                     context['error'] = value
             return render(request, 'board/write.html', context)
 
@@ -73,7 +73,7 @@ def modify(request, post_id):
         else:
             context = {'forms': write_form}
             if write_form.errors:
-                for value in write_form.erros.values():
+                for value in write_form.errors.values():
                     context['error'] = value
             return render(request, 'board/modify.html', context)
 
