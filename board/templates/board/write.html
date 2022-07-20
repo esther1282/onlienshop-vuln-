@@ -1,15 +1,25 @@
-<h1> 게시판 글쓰기! </h1>
-<form action="" method="POST">
-    {% csrf_token %}
-    {% for form in forms %}
-    <div>
-        <label for="{{ form.id_for_label }}">{{ form.label}}</label>
-        {{ form }}
-    </div>
-    {% endfor %}
+{% extends "board/base.html" %}
+{% load static %}
 
-    {% if error %}
-    {{ error }}
-    {% endif %}
-    <button type="submit">등록</button>
-</form>
+{% block title %}
+Order
+{% endblock title %}
+
+{% block content %}
+<p class="menu-title">게시판 글쓰기
+<div style="padding: 10px;">
+    <form action="" method="POST">
+        {% csrf_token %}
+        {% for form in forms %}
+        <div>
+            {{ form }}
+        </div>
+        {% endfor %}
+
+        {% if error %}
+        {{ error }}
+        {% endif %}
+        <button class="btn-submit" type="submit">등록</button>
+    </form>
+</div>
+{% endblock content %}

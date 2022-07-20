@@ -28,7 +28,7 @@
          <p class="menu-title">장바구니</p>
      </div>
 
-    <div class="content container" >
+    <div class="content container">
         {% ifnotequal cart.get_cart_items.count 0 %}
         <div class="cart-custom text-center">
             {% csrf_token %}

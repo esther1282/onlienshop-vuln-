@@ -94,6 +94,27 @@ div .content-product {
     width: 70%;
 }
 
+.btn-write {
+    float: right;
+    background: white;
+    border-color: #4D8EEF;
+    border-radius: 8px;
+    font-weight: bold;
+    padding: 5px 8px;
+    margin-left: 10px;
+}
+
+.btn-submit {
+    float: right;
+    background: #4D8EEF;
+    color: white;
+    outline: none;
+    border: none;
+    border-radius: 14px;
+    font-weight: bold;
+    padding: 8px 20px;
+}
+
 .main_image{
     display: flex;
     justify-content: center;

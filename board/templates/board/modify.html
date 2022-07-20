@@ -1,15 +1,25 @@
-<h1> 글 수정하기 </h1>
-<form action="" method="POST">
-    {% csrf_token %}
-    {% for form in forms %}
-    <div>
-        <label for="{{ form.id_for_label }}">{{ form.label}}</label>
-        {{ form }}
-    </div>
-    {% endfor %}
+{% extends "board/base.html" %}
+{% load static %}
 
-    {% if error %}
-    {{ error }}
-    {% endif %}
-    <button type="submit">수정</button>
-</form>
+{% block title %}
+Order
+{% endblock title %}
+
+{% block content %}
+<p class="menu-title">글 수정하기
+<div style="padding: 10px;">
+    <form action="" method="POST">
+        {% csrf_token %}
+        {% for form in forms %}
+        <div>
+            {{ form }}
+        </div>
+        {% endfor %}
+
+        {% if error %}
+        {{ error }}
+        {% endif %}
+        <button class="btn-submit" type="submit">수정</button>
+    </form>
+</div>
+{% endblock content %}
