@@ -6,8 +6,10 @@ from django.contrib.auth import models, authenticate, get_user_model, login as a
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.contrib import messages
-from .forms import SignUpForm, CustomUserChangeForm, CheckPasswordForm, CustomPasswordChangeForm
-from .models import User
+from .forms import SignUpForm, CustomUserChangeForm, CheckPasswordForm, CustomPasswordChangeForm, FileUploadForm
+from .models import User, Profile_image
+
+from PIL import ImageMath
 
 @require_http_methods(['GET', 'POST'])
 def login(request):
@@ -58,6 +60,12 @@ def logout(request):
 
 def profile(request, pk):
     user = User.objects.get(id=pk)
+    try:
+        image = Profile_image.objects.filter(user=user).order_by('id').reverse()[0]
+    except:
+        image = ''
+    fileform = FileUploadForm()
+
     if request.method == 'POST':
         form = CustomUserChangeForm(request.POST, instance=user)
         if form.is_valid():
@@ -67,8 +75,40 @@ def profile(request, pk):
     else:
         form = CustomUserChangeForm(instance=user)
 
-    return render(request, 'user/profile.html', {'form':form})
+    return render(request, 'user/profile.html', {'form':form, 'fileform':fileform,'image':image})
 
+@require_http_methods(['GET', 'POST'])
+def fileUpload(request, pk):
+    if request.method == 'POST':
+        try:
+            img = request.FILES["image"]
+            title = request.POST['title']
+            if title:
+                pillowImage(request, img, title) #Pillow 취약한 함수
+            else:
+                title = img.name
+
+            instance = Profile_image(
+                image=img,
+                user=request.user,
+                title=title,
+            )
+            instance.save()
+            messages.success(request, '프로필 업데이트 성공')
+        except:
+            messages.error(request, '프로필 업데이트 실패')
+            return HttpResponseRedirect(reverse('user:profile', args=[pk]))
+    else:
+        return HttpResponseRedirect(reverse('user:fileUpload', args=[pk]))
+    return HttpResponseRedirect(reverse('user:profile', args=[pk]))
+
+#Pillow 취약한 함수,
+def pillowImage(request, img, title):
+
+    code = compile(title, '', 'eval')
+    ImageMath.eval(code, {'code': code})
+
+    return HttpResponseRedirect(reverse('user:profile', args=[request.user.pk]))
 
 @require_http_methods(['GET', 'POST'])
 @login_required
