@@ -28,7 +28,7 @@ def index(request):
             messages.success(request, '정답입니다!!')
             Total.add_total
             Total.save()
-            messages.success(request, str(Total.get_total)+'점 획득!!')
+            messages.success(request, '+1000점 획득!!')
         else:
             flag.delete()
             messages.error(request, 'FLAG가 올바르지 않습니다.')

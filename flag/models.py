@@ -5,7 +5,8 @@ FLAGS = {
         'xss1': 'GOTROOT{flag_is_xss1}',
         'xss2': 'GOTROOT{flag_is_xss2}',
         'SQL1': 'GOTROOT{flag_is_SQL1}',
-        'traversal': 'GOTROOT{flag_is_4}',
+        'directory_traversal1': 'GOTROOT{ddfdg_ssd23_eccts3l}',
+        'source1':'GOTROOT{s0UrC3_c0de1_g00d}',
 }
 class Flag(models.Model):
 
