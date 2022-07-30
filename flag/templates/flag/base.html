@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/shop/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/order/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <!--폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+
+    <title>{% block title %}{% endblock %}OnlineShop</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+<script src="https://kit.fontawesome.com/42209b930c.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+<div class="navbar-all sticky-top">
+    {% include 'shop/user_navbar.html' %}
+    {% include 'shop/navbar.html' %}
+</div>
+<div class="content">
+    {% block content %} {% endblock %}
+</div>
+
+{% for message in messages %}
+                <div class="alert {{ message.tags }} alert-auto-dismissible alert-dismissible notification-container text-center" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ message }}
+                </div>
+{% endfor %}
+
+
+        <script type="text/javascript">
+            window.setTimeout(function() {
+                $(".alert-auto-dismissible").fadeTo(500, 0).slideUp(500, function(){
+                    $(this).remove();
+                });
+            }, 3000);
+        </script>
+{% include 'user/footer.html' %}
+</body>
+</html>
