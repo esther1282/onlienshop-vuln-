@@ -40,9 +40,6 @@ Order
     {% endfor %}
     </tbody>
 </table>
-{% else %}
-<b><hr>작성된 게시글이 없습니다.</b>
-{% endif %}
 
 <div class="d-flex">
     <ul class="pagination mx-auto" style="margin-top: 2rem;">
@@ -79,6 +76,9 @@ Order
     {% endif %}
     </ul>
 </div>
+{% else %}
+<b><hr>작성된 게시글이 없습니다.</b>
+{% endif %}
 <a href="{% url 'board:write' %}"><button class="btn-write">글쓰기</button></a>
 
 
