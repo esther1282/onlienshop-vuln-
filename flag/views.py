@@ -17,6 +17,12 @@ def index(request):
         flag = Flag.objects.create(user=request.user, data=input)
 
         if flag.check_flag:
+            flag_set = Flag.objects.filter(user=request.user).order_by('date_ordered')
+            for i in range(0, len(flag_set) - 1):
+                if flag.data == flag_set[i].data:
+                    messages.error(request, '이미 제출한 flag입니다.')
+                    flag.delete()
+                    return HttpResponseRedirect(reverse('flag:index'))
             messages.success(request, '정답입니다!!')
             Total.add_total
             Total.save()
@@ -27,6 +33,6 @@ def index(request):
 
         return HttpResponseRedirect(reverse('flag:index'))
     else:
-        return render(request, 'flag/index.html')
+        return render(request, 'flag/index.html', {'myscore':Total.get_total})
 
 

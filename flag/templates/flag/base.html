@@ -21,9 +21,6 @@
     {% include 'shop/user_navbar.html' %}
     {% include 'shop/navbar.html' %}
 </div>
-<div class="content">
-    {% block content %} {% endblock %}
-</div>
 
 {% for message in messages %}
                 <div class="alert {{ message.tags }} alert-auto-dismissible alert-dismissible notification-container text-center" role="alert">
@@ -33,7 +30,9 @@
                     {{ message }}
                 </div>
 {% endfor %}
-
+<div class="content">
+    {% block content %} {% endblock %}
+</div>
 
         <script type="text/javascript">
             window.setTimeout(function() {
