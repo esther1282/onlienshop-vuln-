@@ -45,3 +45,4 @@ class User_total(models.Model):
     @property
     def get_user(self):
         return self.user
+

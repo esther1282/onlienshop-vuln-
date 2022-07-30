@@ -21,8 +21,27 @@ Flag
     </div>
     <br><br>
    <h2 style="text-align: center; padding-bottom: 50px;">Scoreboard</h2>
-    <div class="container" style="width: 400px;">
-       내 점수 : <strong>{{ myscore }}</strong>
+    <div class="container" style="width: 700px; background-color: #bfd1ec; padding:20px; margin-bottom: 30px;">
+       내 점수 : <strong>{{ myscore }}</strong><br><br>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">이름</th>
+          <th scope="col">점수</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for item in score_set %}
+        <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{ item.user.email }}</td>
+              <td>{{ item.total }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
     </div>
+
 
 {% endblock content %}

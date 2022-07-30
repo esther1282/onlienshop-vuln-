@@ -12,6 +12,8 @@ def index(request):
         Total = User_total.objects.create(user=request.user)
         Total.save()
 
+    Score_set = User_total.objects.order_by('-total')
+
     if request.method == "POST":
         input = request.POST['flag']
         flag = Flag.objects.create(user=request.user, data=input)
@@ -26,13 +28,11 @@ def index(request):
             messages.success(request, '정답입니다!!')
             Total.add_total
             Total.save()
-            messages.success(request, Total.get_total)
+            messages.success(request, str(Total.get_total)+'점 획득!!')
         else:
             flag.delete()
             messages.error(request, 'FLAG가 올바르지 않습니다.')
 
         return HttpResponseRedirect(reverse('flag:index'))
     else:
-        return render(request, 'flag/index.html', {'myscore':Total.get_total})
-
-
+        return render(request, 'flag/index.html', {'myscore':Total.get_total, 'score_set':Score_set, 'num':0})
