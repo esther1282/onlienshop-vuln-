@@ -20,7 +20,6 @@ def list(request):
     page = request.GET.get('page', 1)
     paginator = Paginator(post_list, 10) # 한페이지당 개수
     post_page = paginator.get_page(page)
-
     return render(request, 'board/list.html', {'posts': post_page, 'user': request.user})
 
 def write(request):
@@ -54,7 +53,6 @@ def write(request):
             return render(request, 'board/write.html', context)
 
 def detail(request, post_id):
-
     post = get_object_or_404(Post, id=post_id)
     return render(request, 'board/detail.html', {'post': post})
 

