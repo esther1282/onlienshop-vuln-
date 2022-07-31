@@ -3,7 +3,7 @@ from django.contrib import messages
 
 FLAGS = {
         'xss1': 'GOTROOT{flag_is_xss1}',
-        'xss2': 'GOTROOT{flag_is_xss2}',
+        'xss2': 'GOTROOT{y0oure_Xss_m@st3r}',
         'SQL1': 'GOTROOT{flag_is_SQL1}',
         'directory_traversal1': 'GOTROOT{ddfdg_ssd23_eccts3l}',
         'source1':'GOTROOT{s0UrC3_c0de1_g00d}',

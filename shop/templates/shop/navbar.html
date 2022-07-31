@@ -16,10 +16,12 @@
                 <li class="">
                    <form class="d-flex" role="search" method="get" action="{% url 'shop:index' %}">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q" value="{{ request.GET.q }}">
-                    <button class="btn btn-secondary" type="submit">Search</button>
+                    <button class="btn btn-secondary" type="submit" id="chk">Search</button>
                     </form>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
+<script type="text/javascript" src="/static/js/script.js"></script>
