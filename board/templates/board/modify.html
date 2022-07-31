@@ -11,10 +11,17 @@ Order
     <form action="" method="POST">
         {% csrf_token %}
         {% for form in forms %}
-        <div>
+         <div>
+            {% ifequal form.id_for_label "id_is_secret" %}
+            <label for="{{ form.id_for_label }}">{{ form.label }}</label>
+            {% endifequal %}
             {{ form }}
         </div>
         {% endfor %}
+        <script type="text/javascript">
+            document.querySelector("#id_title").style.width = "720px";
+            document.querySelector("#id_title").style.height = "35px";
+        </script>
 
         {% if error %}
         {{ error }}

