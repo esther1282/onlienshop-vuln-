@@ -22,7 +22,7 @@ class Post(models.Model):
         self.title = xss_filter(self.title)
         """uuid = self.uuid
         url = "http://127.0.0.1:8000/board/" + str(uuid) + "/"
-        cookie = {'flag': 'GOTROOT{c00ki3_i3_g00d}'}
+        cookie = {'flag': 'GOTROOT{c00ki3_i3_Fla9}'}
         res = requests.get(url, cookies=cookie)"""
         super().save(*args, **kwargs)
 

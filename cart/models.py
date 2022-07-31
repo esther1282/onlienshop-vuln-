@@ -39,3 +39,10 @@ class CartItem(models.Model) :
     @property
     def get_sub_total(self):
         return self.quantity * self.each_price
+
+    @property
+    def check_stock(self):
+        if self.product.stock <= 0:
+            return True
+        else:
+            return False

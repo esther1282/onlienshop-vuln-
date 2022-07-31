@@ -73,6 +73,9 @@
                                 <i class="fas fa-trash-alt custom_icon"></i></a>
                         </td>
                     </tr>
+                    {% if item.check_stock %}
+                    <tr><td></td><td></td><td><b>GOTROOT{St0c4_i3_zerO}</td><td></td><td></td><td></td></tr>
+                    {% endif %}
                 {% endfor %}
                 </tbody>
             </table>
