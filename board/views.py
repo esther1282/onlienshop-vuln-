@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post
-from user.models import User
+from django.contrib import messages
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 from .forms import WriteForm
 from django.core.paginator import Paginator
 
@@ -57,6 +59,10 @@ def detail(request, post_id):
 
 def modify(request, post_id):
     post = get_object_or_404(Post, id=post_id)
+    if post.writer != request.user:
+        messages.error(request, '작성자만 수정할 수 있습니다.')
+        return HttpResponseRedirect(reverse('board:list'))
+
     if request.method == 'GET':
         write_form = WriteForm(instance=post)
         return render(request, 'board/modify.html', {'forms': write_form})
@@ -79,7 +85,9 @@ def modify(request, post_id):
 
 
 def delete(request, post_id):
-    # 본인인지 확인하는 login
     post = get_object_or_404(Post, id=post_id)
+    if post.writer != request.user:
+        messages.error(request, '작성자만 삭제할 수 있습니다')
+        return HttpResponseRedirect(reverse('board:list'))
     post.delete()
     return redirect('/board')

@@ -21,6 +21,16 @@
     {% include 'shop/user_navbar.html' %}
     {% include 'shop/navbar.html' %}
 </div>
+
+{% for message in messages %}
+<div class="alert {{ message.tags }} alert-auto-dismissible alert-dismissible notification-container text-center" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+</div>
+{% endfor %}
+
 <div class="container justify-content-center" style="padding:80px; width:75%;">
     <a href="{% url 'board:list'%}" style="text-decoration: none; color: black;"><b>게시판</b></a>
     {% block content %} {% endblock %}

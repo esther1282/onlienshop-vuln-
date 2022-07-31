@@ -17,9 +17,11 @@ Order
         {{ post.content|safe }}
     </div>
 
+    {% ifequal request.user post.writer %}
     <div class="button" style="">
         <a href="{% url 'board:delete' post.id %}"><button class="btn-write">삭제</button></a>
         <a href="{% url 'board:modify' post.id %}"><button class="btn-write">수정</button></a>
     </div>
+    {% endifequal %}
 </div>
 {% endblock content %}
