@@ -89,7 +89,11 @@ WSGI_APPLICATION = 'gotroot_site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'onlineshop',
+        'USER': 'admin',
+        'PASSWORD': 'gotshop123!',
+        'HOST': 'onlineshop.c1ltli7ewwe5.us-west-1.rds.amazonaws.com    ',
+        'PORT': '3306',
     }
 }
 
