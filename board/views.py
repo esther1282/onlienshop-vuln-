@@ -26,7 +26,7 @@ def write(request):
     if request.user.is_authenticated:
         pass
     else:
-        return redirect('/user/login')
+        return redirect('/user/login?next=/board/')
 
     if request.method == 'GET':
         write_form = WriteForm()

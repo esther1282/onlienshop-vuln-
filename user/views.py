@@ -1,5 +1,5 @@
 from django.views import View
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import models, authenticate, get_user_model, login as auth_login, logout as auth_logout, update_session_auth_hash
@@ -14,6 +14,7 @@ from PIL import ImageMath
 @require_http_methods(['GET', 'POST'])
 def login(request):
     if request.method == "POST":
+        next = request.POST.get('next', '/')
         email = request.POST['email']
         password = request.POST['password']
         user = authenticate(request, email=email, password=password)
@@ -21,7 +22,7 @@ def login(request):
         if user is not None:
             auth_login(request, user)
             messages.success(request, '로그인 성공')
-            return HttpResponseRedirect(reverse('shop:index'))
+            return HttpResponseRedirect(next)
         else:
             messages.error(request, '로그인 실패')
             return render(request, 'user/login.html', {'po_email': email})
@@ -56,7 +57,7 @@ def signup(request):
 def logout(request):
     auth_logout(request)
     messages.success(request, '로그아웃 완료')
-    return HttpResponseRedirect('/')
+    return redirect(request.META.get('HTTP_REFERER'))
 
 def profile(request, pk):
     user = User.objects.get(id=pk)
