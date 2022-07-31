@@ -3,6 +3,8 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+admin.site.site_header = 'GOTROOT{w3lc0me_@dm1n_pa9e}'
+
 urlpatterns = [
     path('master/', admin.site.urls),
     path('', include('shop.urls')),
