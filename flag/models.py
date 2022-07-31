@@ -7,6 +7,9 @@ FLAGS = {
         'SQL1': 'GOTROOT{flag_is_SQL1}',
         'directory_traversal1': 'GOTROOT{ddfdg_ssd23_eccts3l}',
         'source1':'GOTROOT{s0UrC3_c0de1_g00d}',
+        'param1':'GOTROOT{p@r@m3T3r}',
+        'javascript1':'GOTROOT{jAv@3cript_w311}',
+
 }
 class Flag(models.Model):
 
