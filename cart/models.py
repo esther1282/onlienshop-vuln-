@@ -34,7 +34,7 @@ class CartItem(models.Model) :
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
 
     def __str__(self):
-        return (self.cart.pk)+"_"+self.product.name
+        return self.cart.user.username+"_"+self.product.name
 
     @property
     def get_sub_total(self):

@@ -28,7 +28,7 @@
          <p class="menu-title">장바구니</p>
      </div>
 
-    <div class="content container" >
+    <div class="content container">
         {% ifnotequal cart.get_cart_items.count 0 %}
         <div class="cart-custom text-center">
             {% csrf_token %}
@@ -45,7 +45,6 @@
                 </thead>
                 <tbody>
                 {% for item in cart.get_cart_items %}
-
                     <tr>
                         <td>
                             <label>
@@ -74,11 +73,6 @@
                                 <i class="fas fa-trash-alt custom_icon"></i></a>
                         </td>
                     </tr>
-{#                    {% if item.product.stock|sub:item.quantity<0%}#}
-{#                        <script>#}
-{#                        document.querySelector("body > div.content.container > div > table > tbody > tr > td:nth-child(1) > label > input[type=checkbox]").disabled = true;#}
-{#                        </script>#}
-{#                    {% endif %}#}
                 {% endfor %}
                 </tbody>
             </table>

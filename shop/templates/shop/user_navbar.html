@@ -9,10 +9,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="nav navbar-nav navbar-right">
                 <li class="">
-                    <a href="{% url 'board:list' %}">게시판</a>
+                    <a href="{% url 'board:list' %}">
+                        게시판
+                    </a>
                 </li>
                 {% if user.is_authenticated %}
-
+                <li class="">
+                    <a href="{% url 'flag:index' %}">
+                        <i class="fa-solid fa-right-from-bracket fa-xl custom_icon"></i> FLAG
+                    </a>
+                </li>
                 <li class="">
                     <a href="{% url 'cart:index' %}">
                         <i class="fa-solid fa-xl fa-cart-shopping custom_icon"></i>
@@ -41,6 +47,7 @@
                         <i class="fa-solid fa-right-from-bracket fa-xl custom_icon"></i> 로그인
                     </a>
                 </li>
+
 
                 {% endif %}
             </ul>

@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post
+from django.contrib import messages
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 from .forms import WriteForm
 from django.core.paginator import Paginator
 
@@ -17,10 +20,14 @@ def list(request):
     page = request.GET.get('page', 1)
     paginator = Paginator(post_list, 10) # 한페이지당 개수
     post_page = paginator.get_page(page)
-
-    return render(request, 'board/list.html', {'posts': post_page})
+    return render(request, 'board/list.html', {'posts': post_page, 'user': request.user})
 
 def write(request):
+    if request.user.is_authenticated:
+        pass
+    else:
+        return redirect('/user/login')
+
     if request.method == 'GET':
         write_form = WriteForm()
         return render(request, 'board/write.html', {'forms': write_form})
@@ -33,6 +40,7 @@ def write(request):
             post = Post(
                 title = write_form.title,
                 content = write_form.content,
+                writer = request.user,
                 is_secret = write_form.is_secret
             )
             post.save()
@@ -40,7 +48,7 @@ def write(request):
         else:
             context = {'forms': write_form}
             if write_form.errors:
-                for value in write_form.erros.values():
+                for value in write_form.errors.values():
                     context['error'] = value
             return render(request, 'board/write.html', context)
 
@@ -50,6 +58,10 @@ def detail(request, post_id):
 
 def modify(request, post_id):
     post = get_object_or_404(Post, id=post_id)
+    if post.writer != request.user:
+        messages.error(request, '작성자만 수정할 수 있습니다.')
+        return HttpResponseRedirect(reverse('board:list'))
+
     if request.method == 'GET':
         write_form = WriteForm(instance=post)
         return render(request, 'board/modify.html', {'forms': write_form})
@@ -66,13 +78,15 @@ def modify(request, post_id):
         else:
             context = {'forms': write_form}
             if write_form.errors:
-                for value in write_form.erros.values():
+                for value in write_form.errors.values():
                     context['error'] = value
             return render(request, 'board/modify.html', context)
 
 
 def delete(request, post_id):
-    # 본인인지 확인하는 login
     post = get_object_or_404(Post, id=post_id)
+    if post.writer != request.user:
+        messages.error(request, '작성자만 삭제할 수 있습니다')
+        return HttpResponseRedirect(reverse('board:list'))
     post.delete()
     return redirect('/board')

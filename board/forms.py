@@ -10,7 +10,7 @@ class WriteForm(forms.ModelForm):
         required=True,
     )
     content = SummernoteTextField()
-    is_secret = forms.BooleanField()
+    is_secret = forms.BooleanField(label="비밀글")
 
     class Meta:
         model = Post

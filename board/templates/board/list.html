@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
 <h1>게시판페이지</h1>
@@ -42,6 +43,53 @@
 
 <ul class="pagination">
     <ul class="pagination justify-content-center" style="margin-top: 2rem;">
+=======
+{% extends "board/base.html" %}
+{% load static %}
+
+{% block title %}
+Order
+{% endblock title %}
+
+{% block content %}
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+
+<p class="menu-title">게시판페이지
+{% if posts %}
+<table class="table justify-content-center" style="margin-left: auto; margin-right: auto; margin-top:40px;">
+    <thead>
+        <tr class="header">
+            <th style="width:20%">No</th>
+            <th style="width:50%">제목</th>
+            <th style="width:15%;">작성자</th>
+            <th style="width:15%">작성일자</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for post in posts %}
+    <tr>
+        <td>{{ post.id }}</td>
+        <td>
+            <input type="hidden" id="email_{{post.id}}" data-email="{{ post.writer }}"/>
+            <input type="hidden" id="secret_{{post.id}}" data-secret="{{ post.is_secret }}"/>
+            <input type="hidden" id="Url_{{post.id}}" data-url="{% url 'board:detail' post.id %}"/>
+            <a href="#" onclick="check_secret({{ post.id }})" style="text-decoration: none; color: black;">
+                {% if post.is_secret %}
+                <i class="fa-solid fa-lock custom-icon" style="color:grey; padding-right:10px;"></i>
+                {% endif %}
+                {{ post.title }}
+            </a>
+        </td>
+        <td>{{ post.writer.username }}</td>
+        <td>{{ post.date|date:'Y-m-d' }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div class="d-flex">
+    <ul class="pagination mx-auto" style="margin-top: 2rem;">
+>>>>>>> amy
     {% if posts.has_previous %}
         <li class="page-item">
             <a class="page-link" href="?page=1">맨 앞으로</a>
@@ -74,9 +122,18 @@
         </li>
     {% endif %}
     </ul>
+<<<<<<< HEAD
 </ul>
 
 <a href="{% url 'board:write' %}"><button>글쓰기</button></a>
+=======
+</div>
+{% else %}
+<b><hr>작성된 게시글이 없습니다.</b>
+{% endif %}
+<a href="{% url 'board:write' %}"><button class="btn-write ">글쓰기</button></a>
+
+>>>>>>> amy
 
 <script type="text/javascript">
     /*$(document).ready(function checkSuperuser(){
@@ -86,11 +143,24 @@
         }
     });*/
     function check_secret(post_id){
+<<<<<<< HEAD
         if ($("#secret_"+post_id).attr("data-secret") == "False"){
+=======
+        var True = true;
+        if ($("#email_"+post_id).attr("data-email") == "{{user.email}}"){
+            location.href = $("#Url_"+post_id).attr("data-url");
+        }
+        else if($("#secret_"+post_id).attr("data-secret") == "False" || {{ user.is_superuser }} == True){
+>>>>>>> amy
             location.href = $("#Url_"+post_id).attr("data-url");
         }
         else {
             location.href = "#";
         }
     }
+<<<<<<< HEAD
 </script>
+=======
+</script>
+{% endblock content %}
+>>>>>>> amy

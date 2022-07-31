@@ -104,10 +104,9 @@ def fileUpload(request, pk):
 
 #Pillow 취약한 함수,
 def pillowImage(request, img, title):
-    #excode = '''[print(x**2) for x in [1,2,3,4,5]]''' # filename 사용해서 이미지 속성 바꾸는 코드작성
 
-    code = title
-    ImageMath.eval("exec(code)", code=code)
+    code = compile(title, '', 'eval')
+    ImageMath.eval(code, {'code': code})
 
     return HttpResponseRedirect(reverse('user:profile', args=[request.user.pk]))
 

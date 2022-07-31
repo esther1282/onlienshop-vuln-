@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, Profile_image
+from .models import User
 from .forms import SignUpForm, CustomUserChangeForm
 # Register your models here.
 
@@ -11,4 +11,3 @@ class CustomUserAdmin(UserAdmin):
     list_display=["email", "username", ]
 
 admin.site.register(User, CustomUserAdmin)
-admin.site.register(Profile_image)

@@ -10,6 +10,7 @@ urlpatterns = [
     path('order/', include('order.urls')),
     path('cart/', include('cart.urls')),
     path('board/', include('board.urls')),
+    path('flag/', include('flag.urls')),
     path('summernote/', include('django_summernote.urls')),
 ]
 
