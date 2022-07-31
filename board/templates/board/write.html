@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-<h1> 게시판 글쓰기! </h1>
-<form action="" method="POST">
-    {% csrf_token %}
-    {% for form in forms %}
-    <div>
-        <label for="{{ form.id_for_label }}">{{ form.label}}</label>
-        {{ form }}
-    </div>
-    {% endfor %}
-
-    {% if error %}
-    {{ error }}
-    {% endif %}
-    <button type="submit">등록</button>
-</form>
-=======
 {% extends "board/base.html" %}
 {% load static %}
 
@@ -40,4 +23,3 @@ Order
     </form>
 </div>
 {% endblock content %}
->>>>>>> amy
