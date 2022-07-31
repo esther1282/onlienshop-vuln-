@@ -8,6 +8,10 @@ from django.core import serializers
 
 
 def index(request):
+    if request.user.is_authenticated:
+        pass
+    else:
+        return redirect('/user/login?next=/cart/')
     try:
         cart = Cart.objects.get(user=request.user)
     except Cart.DoesNotExist:

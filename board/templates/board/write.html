@@ -7,15 +7,22 @@ Order
 
 {% block content %}
 <p class="menu-title">게시판 글쓰기
-<div style="padding: 10px;">
+<div style="padding: 10px; display: flex;">
     <form action="" method="POST">
         {% csrf_token %}
         {% for form in forms %}
         <div>
+            {% ifequal form.id_for_label "id_is_secret" %}
+            <label for="{{ form.id_for_label }}">{{ form.label}}</label>
+            {% endifequal %}
             {{ form }}
         </div>
         {% endfor %}
-
+        <script type="text/javascript">
+            document.querySelector("#id_title").style.width="720px";
+            document.querySelector("#id_title").style.height="30px";
+            document.querySelector("#id_is_secret").innerHTML="비밀글";
+        </script>
         {% if error %}
         {{ error }}
         {% endif %}

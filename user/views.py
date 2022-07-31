@@ -13,6 +13,7 @@ from PIL import ImageMath
 
 @require_http_methods(['GET', 'POST'])
 def login(request):
+    redirect_to = request.POST.get('next', '/')
     if request.method == "POST":
         email = request.POST['email']
         password = request.POST['password']
@@ -21,7 +22,7 @@ def login(request):
         if user is not None:
             auth_login(request, user)
             messages.success(request, '로그인 성공')
-            return HttpResponseRedirect(reverse('shop:index'))
+            return HttpResponseRedirect(redirect_to)
         else:
             messages.error(request, '로그인 실패')
             return render(request, 'user/login.html', {'po_email': email})

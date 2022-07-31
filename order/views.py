@@ -6,6 +6,10 @@ from user.forms import CustomUserChangeForm
 from cart.models import Cart
 
 def index(request):
+    if request.user.is_authenticated:
+        pass
+    else:
+        return redirect('/user/login?next=/order/')
     orders = Order.objects.filter(user=request.user).order_by('-date_ordered')
     return render(request, 'order/index.html', {'orders': orders})
 
