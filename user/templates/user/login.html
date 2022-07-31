@@ -21,6 +21,7 @@ Log in
                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
 
                 <form class="mx-1 mx-md-4" action="{% url 'user:login' %}" method='post'>
+                    <input type="hidden" name="next" value="{{ request.GET.next }}">
                     {% csrf_token %}
 
                   <div class="d-flex flex-row align-items-center mb-4">

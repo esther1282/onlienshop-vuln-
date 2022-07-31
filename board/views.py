@@ -26,7 +26,7 @@ def write(request):
     if request.user.is_authenticated:
         pass
     else:
-        return redirect('/user/login')
+        return redirect('/user/login?next=/board/')
 
     if request.method == 'GET':
         write_form = WriteForm()
@@ -52,10 +52,9 @@ def write(request):
                     context['error'] = value
             return render(request, 'board/write.html', context)
 
-def detail(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
-
-    return render(request, 'board/detail.html', {'post': post, 'user':request.user})
+def detail(request, uuid):
+    post = get_object_or_404(Post, uuid=uuid)
+    return render(request, 'board/detail.html', {'post': post})
 
 def modify(request, post_id):
     post = get_object_or_404(Post, id=post_id)
