@@ -12,9 +12,8 @@ FLAGS = {
     'SQL2': 'GOTROOT{3QL_ln7ectI0n_g0OD}',
     'cookie':'GOTROOT{cOOk13_i3_vuIn}',
     'xss2': 'GOTROOT{y0oure_Xss_m@st3r}',
-    'SQL1': 'GOTROOT{flag_is_SQL1}',
     'directory_indexing':'GOTROOT{m3dia_fl@g_h3re}',
-    'directory_traversal1': 'GOTROOT{ddfdg_ssd23_eccts3l}',
+    'SQL1': 'GOTROOT{flag_is_SQL1}',
 }
 
 class Flag(models.Model):
