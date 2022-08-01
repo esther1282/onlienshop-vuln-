@@ -2,15 +2,19 @@ from django.db import models
 from django.contrib import messages
 
 FLAGS = {
-        'xss1': 'GOTROOT{c00ki3_i3_Fla9}',
-        'xss2': 'GOTROOT{y0oure_Xss_m@st3r}',
-        'SQL1': 'GOTROOT{flag_is_SQL1}',
-        'directory_traversal1': 'GOTROOT{ddfdg_ssd23_eccts3l}',
-        'source1':'GOTROOT{s0UrC3_c0de1_g00d}',
-        'source2':'GOTROOT{m3dia_fl@g_h3re}',
-        'param1':'GOTROOT{p@r@m3T3r}',
-        'javascript1':'GOTROOT{jAv@3cript_w311}',
-        'url_redirect':'GOTROOT{inn3r_t3Xt_Fi1e}',
+    'param1': 'GOTROOT{p@r@m3T3r}',
+    'source':'GOTROOT{s0UrC3_c0de1_g00d}',
+    'javascript1':'GOTROOT{jAv@3cript_w311}',
+    'javascript2':'GOTROOT{St0c4_i3_zerO}',
+    'admin_page':'GOTROOT{w3lc0me_@dm1n_pa9e}',
+    'url_redirect':'GOTROOT{inn3r_t3Xt_Fi1e}',
+    'xss1': 'GOTROOT{c00ki3_i3_Fla9}',
+    'SQL2': 'GOTROOT{3QL_ln7ectI0n_g0OD}',
+    'cookie':'GOTROOT{cOOk13_i3_vuIn}',
+    'xss2': 'GOTROOT{y0oure_Xss_m@st3r}',
+    'SQL1': 'GOTROOT{flag_is_SQL1}',
+    'directory_indexing':'GOTROOT{m3dia_fl@g_h3re}',
+    'directory_traversal1': 'GOTROOT{ddfdg_ssd23_eccts3l}',
 }
 
 class Flag(models.Model):
