@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'mathfilters',
     'django_summernote',
+    'selenium',
 ]
 
 MIDDLEWARE = [
