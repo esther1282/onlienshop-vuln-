@@ -11,10 +11,11 @@ class WriteForm(forms.ModelForm):
     )
     content = SummernoteTextField()
     is_secret = forms.BooleanField(label="비밀글")
+    file = forms.FileField()
 
     class Meta:
         model = Post
-        fields = ['title', 'content', 'is_secret']
+        fields = ['title', 'content', 'is_secret', 'file']
         widgets = {'content': SummernoteWidget()}
 
     def __init__(self, *args, **kwargs):
@@ -27,6 +28,7 @@ class WriteForm(forms.ModelForm):
         title = cleaned_data.get('title', '')
         content = cleaned_data.get('content', '')
         is_secret = cleaned_data.get('is_secret', '')
+        file = cleaned_data.get('file', '')
 
         if title == '':
             self.add_error('title', '글 제목을 입력해주세요')
@@ -36,3 +38,4 @@ class WriteForm(forms.ModelForm):
             self.title = title
             self.content = content
             self.is_secret = is_secret
+            self.file = file
