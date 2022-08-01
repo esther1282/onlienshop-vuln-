@@ -22,7 +22,7 @@ class Post(models.Model):
         self.title = xss_filter(self.title)
         uuid = self.uuid
         super().save(*args, **kwargs)
-        url = "http://127.0.0.1:7878/board/" + str(uuid) + "/"
+        url = "http://127.0.0.1:8000/board/" + str(uuid) + "/"
         cookie = {"name": "flag", "value": 'GOTROOT{c00ki3_i3_Fla9}'}
         read_url(url, cookie)
 
@@ -41,7 +41,7 @@ def read_url(url, cookie={"name": "name", "value": "value"}):
         driver = webdriver.Chrome('C:\\Users\\seoji\\Desktop\\chromedriver.exe', options=options)
         driver.implicitly_wait(3)
         driver.set_page_load_timeout(3)
-        driver.get("http://127.0.0.1:7878/")
+        driver.get("http://127.0.0.1:8000/")
         driver.add_cookie(cookie)
         driver.get(url)
     except Exception as e:

@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib import messages
 
 FLAGS = {
-        'xss1': 'GOTROOT{flag_is_xss1}',
+        'xss1': 'GOTROOT{c00ki3_i3_Fla9}',
         'xss2': 'GOTROOT{y0oure_Xss_m@st3r}',
         'SQL1': 'GOTROOT{flag_is_SQL1}',
         'directory_traversal1': 'GOTROOT{ddfdg_ssd23_eccts3l}',
