@@ -1,0 +1,8 @@
+{% if request.COOKIES.username == "admin" %}
+<h1>GOTROOT{cOOk13_i3_vuIn}</h1>
+{% elif request.COOKIES.username == "root" %}
+<h1>GOTROOT{3QL_ln7ectI0n_g0OD}</h1>
+{% else %}
+<h1>You are not Admin </h1>
+{% endif %}
+<a href="{% url 'master:logout' %}"><button>로그아웃</button></a>
