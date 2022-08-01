@@ -52,8 +52,8 @@ def write(request):
                     context['error'] = value
             return render(request, 'board/write.html', context)
 
-def detail(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
+def detail(request, uuid):
+    post = get_object_or_404(Post, uuid=uuid)
     return render(request, 'board/detail.html', {'post': post})
 
 def modify(request, post_id):

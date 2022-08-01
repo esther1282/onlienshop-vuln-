@@ -40,11 +40,15 @@ Detail
                 <p>재고: {{ product.stock }}개</p>
             </div>
             {% if user.is_authenticated %}
-            <button class="btn-cart" onclick='location.href="{% url 'cart:add_cart' product.id %}"'>장바구니</button>
+            <button class="btn-cart" id="bt" onclick='location.href="{% url 'cart:add_cart' product.id %}"'>장바구니</button>
             {% endif %}
         </div>
     </div>
     {% if error_message %}
+        <script type="text/javascript">
+            document.querySelector("#bt").disabled=true;
+            document.querySelector("#bt").style.backgroundColor='grey';
+        </script>
         <h1 style="color:red;"><strong>{{ error_message }}</strong></h1>
     {% endif %}
 </div>
