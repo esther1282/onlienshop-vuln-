@@ -15,12 +15,13 @@ class WriteForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ['title', 'content', 'is_secret', 'file']
+        fields = ['title', 'content', 'file','is_secret']
         widgets = {'content': SummernoteWidget()}
 
     def __init__(self, *args, **kwargs):
         super(WriteForm, self).__init__(*args, **kwargs)
         self.fields['is_secret'].required = False
+        self.fields['file'].required = False
 
     def clean(self):
         cleaned_data = super().clean()

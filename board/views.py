@@ -33,7 +33,7 @@ def write(request):
         return render(request, 'board/write.html', {'forms': write_form})
 
     elif request.method == 'POST':
-        write_form = WriteForm(request.POST)
+        write_form = WriteForm(request.POST, request.FILES)
 
         if write_form.is_valid():
             # writer = User
@@ -41,9 +41,11 @@ def write(request):
                 title = write_form.title,
                 content = write_form.content,
                 writer = request.user,
-                is_secret = write_form.is_secret
+                is_secret = write_form.is_secret,
+                file = write_form.file,
             )
             post.save()
+            #handle_upload_file(request.FILES.get('file'))
             return redirect('/board')
         else:
             context = {'forms': write_form}
@@ -90,3 +92,9 @@ def delete(request, post_id):
         return HttpResponseRedirect(reverse('board:list'))
     post.delete()
     return redirect('/board')
+
+#파일 업로드
+def handle_upload_file(f):
+    with open('uploaded/' + f.name, 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)

@@ -8,7 +8,7 @@ Order
 {% block content %}
 <p class="menu-title">게시판 글쓰기
 <div style="padding: 10px; text-align: center;">
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {% for form in forms %}
         <div>
@@ -16,12 +16,13 @@ Order
             <label for="{{ form.id_for_label }}">{{ form.label }}</label>
             {% endifequal %}
             {{ form }}
-        </div>:
+        </div>
         {% endfor %}
         <script type="text/javascript">
             document.querySelector("#id_title").style.width="720px";
             document.querySelector("#id_title").style.height="30px";
             document.querySelector("#id_is_secret").innerHTML="비밀글";
+            document.querySelector("#id_file").style = "position: relative; left: 10%;";
         </script>
 
         {% if error %}

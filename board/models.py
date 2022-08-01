@@ -10,6 +10,7 @@ class Post(models.Model):
     #hits = models.PositiveIntegerField(default=0)
     is_secret = models.BooleanField(default=False)
     uuid = models.UUIDField(db_index=True, default=uuid.uuid4, editable=False)
+    file = models.FileField(null=True, upload_to='uploaded/')
 
     def __str__self(self):
         return self.post_title

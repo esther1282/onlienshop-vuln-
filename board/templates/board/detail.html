@@ -16,6 +16,9 @@ Order
     <div style="padding:30px 0px;">
         {{ post.content|safe }}
     </div>
+    <div style="padding:30px 0px;">
+        {% if post.file %} 파일 : {{ post.file|safe }} {% endif %}
+    </div>
 
     {% ifequal request.user post.writer %}
     <div class="button" style="">
