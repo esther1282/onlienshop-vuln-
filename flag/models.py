@@ -10,6 +10,7 @@ FLAGS = {
         'source2':'GOTROOT{m3dia_fl@g_h3re}',
         'param1':'GOTROOT{p@r@m3T3r}',
         'javascript1':'GOTROOT{jAv@3cript_w311}',
+        'url_redirect':'GOTROOT{inn3r_t3Xt_Fi1e}',
 }
 
 class Flag(models.Model):
