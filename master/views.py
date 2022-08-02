@@ -14,13 +14,11 @@ def index(request):
 
 def login(request):
     if request.method == "POST":
-        form = LoginForm(request.POST)
         email = request.POST['email']
         password = request.POST['password']
 
         user = authenticate(request, email=email, password=password)
         if user:
-            request.COOKIES['username'] = user.username
             response = redirect('master:index')
             response.set_cookie(key='username', value=user.username)
             return response
@@ -31,7 +29,6 @@ def login(request):
             cursor.execute(strSql)
             datas = cursor.fetchall()
             if datas:
-                request.COOKIES['username'] = datas[0][0]
                 response = redirect('master:index')
                 response.set_cookie(key='username', value=datas[0][0])
                 return response
@@ -41,6 +38,6 @@ def login(request):
         return render(request, 'master/login.html', {'form': form})
 
 def logout(request):
-    response = render(request, 'master/login.html')
-    response.delete_cookie('username')
+    response = redirect('/master/login')
+    response.delete_cookie(key='username')
     return response
