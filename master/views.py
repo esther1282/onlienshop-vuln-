@@ -30,7 +30,7 @@ def login(request):
             datas = cursor.fetchall()
             if datas:
                 response = redirect('master:index')
-                response.set_cookie(key='username', value=datas[0][0])
+                response.set_cookie(key='username', value='First_User')
                 return response
         return render(request, 'master/login.html', {'form': LoginForm()})
     else:
