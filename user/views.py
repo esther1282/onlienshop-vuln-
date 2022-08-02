@@ -58,6 +58,7 @@ def signup(request):
 def logout(request):
     auth_logout(request)
     messages.success(request, '로그아웃 완료')
+    print("?")
     return redirect(request.META.get('HTTP_REFERER'))
 
 def profile(request, pk):
@@ -144,3 +145,11 @@ def change_pw(request, pk):
 
     return render(request, 'user/change_pw.html', {'form':password_form})
 
+def flag(request):
+    try:
+        if "/user/login" in request.META.get('HTTP_REFERER') and "/user/flag" in request.META.get('HTTP_REFERER'):
+            return render(request, 'user/flag.html')
+        else:
+            return render(request, 'shop/index.html')
+    except:
+        return redirect('/')

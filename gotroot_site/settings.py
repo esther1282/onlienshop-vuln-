@@ -32,8 +32,6 @@ ALLOWED_HOSTS = [
     ".vulngotroot.shop",
     '*',
 ]
-
-
 # Application definition
 
 INSTALLED_APPS = [

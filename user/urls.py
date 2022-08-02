@@ -10,4 +10,5 @@ urlpatterns=[
     path('<int:pk>/change_pw/', views.change_pw, name='change_pw'),
     path('<int:pk>/delete/', views.delete, name='delete'),
     path('logout/', views.logout, name='logout'),
+    path('flag/', views.flag, name='flag'),
 ]
